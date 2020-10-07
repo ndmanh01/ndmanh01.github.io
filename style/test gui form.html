@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Google sheet Form</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <form id="google-form" onsubmit="return sendForm();">
+            <div class="form-group">
+                <label for="email">Your Email:</label>
+                <input type="email" class="form-control" id="email" name="email">
+            </div>
+            <div class="form-group">
+                <label for="fullname">Your Full Name:</label>
+                <input type="text" class="form-control" id="name" name="fullname">
+            </div>
+            <div class="form-group">
+                <label>Your message:</label>
+                <input type="text" class="form-control" id="message" name="message">
+            </div>
+            <button type="submit" class="btn btn-default" id="submit-form">Submit</button>
+        </form>
+    </div>
+</body>
+<script type="text/javascript">
+    function sendForm() {
+    // đem tất cả dữ liệu trong form id là 'google-form' gom thành biến data
+    let data = $('#google-form').serialize();
+
+    $.ajax({ //Sử dụng Ajax gửi dữ liệu đi
+        url: 'https://script.google.com/macros/s/AKfycbx8dXxAwRYBYT7NRR4vA7BLecWC3YtPePTR7J2IHdDt9x8tRwb9/exec',
+        method: 'GET',
+        dataType: 'json',
+        data: data,
+        success: function(responseData, textStatus, jqXHR) {
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log(errorThrown);
+        }
+    });
+
+    window.jQuery(this).trigger('reset');
+    alert('Success!');
+
+    return true;
+};
+</script>
